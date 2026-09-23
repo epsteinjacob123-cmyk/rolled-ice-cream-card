@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rolled Ice Cream at Events</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #10151f;
+    --ink-soft: #4a5568;
+    --line: #e7e9ee;
+    --accent: #2f6fed;
+    --accent-soft: #eaf0fe;
+    --paper: #ffffff;
+    --card-w: 620px;
+    --card-h: 360px;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  *, *::before, *::after { box-sizing: inherit; }
+  :root { --page-bg: #ffffff; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --page-bg: #ffffff; } }
+  :root[data-theme="dark"] { --page-bg: #ffffff; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--page-bg);
+    min-height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 32px 16px calc(32px + env(safe-area-inset-bottom, 0px));
+  }
+  .stage { width: min(92vw, 78vh * 1.7222); aspect-ratio: 620 / 360; perspective: 2000px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .card { position: relative; width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(.2,.9,.25,1); transform-style: preserve-3d; }
+  .stage.flipped .card { transform: rotateY(180deg); }
+  .face { position: absolute; inset: 0; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 20px; border: 1px solid var(--line); background: var(--paper); box-shadow: 0 1px 2px rgba(16,21,31,0.04), 0 16px 40px rgba(16,21,31,0.10); display: flex; overflow: hidden; }
+  .front { flex-direction: column; justify-content: center; padding: clamp(22px, 4.5vw, 40px); }
+  .front-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+  .mark { width: 44px; height: 44px; border-radius: 12px; background: var(--accent-soft); display: flex; align-items: center; justify-content: center; flex: none; }
+  .mark svg { width: 24px; height: 24px; color: var(--accent); }
+  .kicker { font-size: 11.5px; font-weight: 600; color: var(--ink-soft); letter-spacing: 0.02em; }
+  .name-block { margin-top: clamp(10px, 3vw, 22px); }
+  .name { font-size: clamp(24px, 4.6vw, 34px); font-weight: 800; color: var(--ink); line-height: 1.08; margin: 0; }
+  .role { font-size: clamp(13px, 2vw, 15px); font-weight: 500; color: var(--accent); margin: 6px 0 0; }
+  .contact-grid { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: clamp(14px, 3vw, 22px); }
+  .contact-item { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font-size: clamp(13px, 1.9vw, 15px); font-weight: 600; }
+  .contact-item svg { width: 18px; height: 18px; flex: none; color: var(--ink-soft); }
+  .contact-item:hover svg, .contact-item:focus-visible svg { color: var(--accent); }
+  .front-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid var(--line); }
+  .location { font-size: 12.5px; color: var(--ink-soft); font-weight: 500; }
+  .hint { font-size: 11.5px; color: var(--ink-soft); display: flex; align-items: center; gap: 5px; }
+  .hint svg { width: 13px; height: 13px; animation: nudge 2.4s ease-in-out infinite; }
+  @keyframes nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(3px); } }
+  .back { transform: rotateY(180deg); flex-direction: column; justify-content: space-between; padding: clamp(22px, 4.5vw, 40px); background: var(--ink); border-color: var(--ink); }
+  .back-kicker { font-size: 11.5px; font-weight: 600; color: #8b93a7; }
+  .back-title { font-size: clamp(20px, 3.6vw, 27px); font-weight: 800; color: #ffffff; line-height: 1.15; margin: 8px 0 0; max-width: 30ch; }
+  .back-desc { font-size: clamp(13px, 1.9vw, 15px); color: #c4cadb; line-height: 1.5; margin: 10px 0 0; max-width: 44ch; }
+  .occasions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: clamp(14px, 3vw, 20px); }
+  .occasion { font-size: 12px; font-weight: 600; color: #dbe1f0; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); padding: 6px 12px; border-radius: 999px; }
+  .back-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.12); }
+  .back-bottom .location { color: #8b93a7; }
+  .back-bottom .hint { color: #8b93a7; }
+  .back-bottom .hint svg { transform: scaleX(-1); }
+  a { font-family: inherit; }
+  @media (prefers-reduced-motion: reduce) { .card { transition: none; } .hint svg { animation: none; } }
+</style>
+</head>
+<body>
+<div class="stage" id="stage" role="button" tabindex="0" aria-label="Flip business card">
+  <div class="card">
+    <div class="face front">
+      <div>
+        <div class="front-top">
+          <div><p class="kicker">ROLLED ICE CREAM AT EVENTS</p></div>
+          <div class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 5V3M9 3h6"/></svg></div>
+        </div>
+        <div class="name-block"><h1 class="name">Jacob Epstein</h1><p class="role">Owner &middot; Rolled Ice Cream Catering</p></div>
+        <div class="contact-grid">
+          <a class="contact-item" href="tel:+12407010989"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>240-701-0989</a>
+          <a class="contact-item" href="mailto:epsteinjacob123@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 6l-10 7L2 6"/><path d="M2 6h20v12H2z"/></svg>epsteinjacob123@gmail.com</a>
+        </div>
+      </div>
+    </div>
+    <div class="face back">
+      <div>
+        <p class="back-kicker">WHAT I DO</p>
+        <h2 class="back-title">Fresh rolled ice cream, made to order at your event</h2>
+        <p class="back-desc">I bring a rolled ice cream station to private events across the DC and Maryland area, including Jewish celebrations like Bar and Bat Mitzvahs. Guests watch fresh, made-to-order rolls churned right in front of them, with the mix-ins they choose.</p>
+        <div class="occasions"><span class="occasion">Bar / Bat Mitzvahs</span><span class="occasion">Birthdays</span><span class="occasion">Private Events</span></div>
+      </div>
+      <div class="back-bottom"><span class="location">Events only</span><span class="hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>Contact info</span></div>
+    </div>
+  </div>
+</div>
+<script>
+  const stage = document.getElementById('stage');
+  function toggleFlip(e) { if (e.target.closest('a')) return; stage.classList.toggle('flipped'); }
+  stage.addEventListener('click', toggleFlip);
+  stage.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); stage.classList.toggle('flipped'); } });
+</script>
+</body>
+</html>
